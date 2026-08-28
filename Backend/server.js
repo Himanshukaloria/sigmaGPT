@@ -33,9 +33,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", authRoutes); // login/signup — public, protect nahi
-app.use("/api", protect, chatRoutes); // chat/thread routes — protected
+app.use("/api/auth", authRoutes);
+app.use("/api", protect, chatRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server Running");
@@ -61,40 +60,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-// import express from "express";
-// const app = express();
-// import cors from "cors";
-// import dotenv from "dotenv";
-// import fetch from "node-fetch";
-// import mongoose from "mongoose";
-// import cookieParser from "cookie-parser";
-// import chatRoutes from "./routes/chat.js";
-// import authRoutes from "./routes/auth.js"
-// dotenv.config();
-
-// const PORT = 8080;
-
-// app.use(cors());
-// app.use(express.json());
-// app.use("/api", chatRoutes);
-
-// app.get("/", (req, res) => {
-//   res.send("Server Running");
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Server is listening at ${PORT}`);
-//   connectDB();
-// });
-
-// //MongoDb connection
-
-// const connectDB = async () => {
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URI);
-//     console.log("Connected With Database");
-//   } catch (err) {
-//     console.log("Failed to connect with DB", err);
-//   }
-// };

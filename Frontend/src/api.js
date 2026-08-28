@@ -4,7 +4,10 @@ const API_URL = configuredApiUrl
       const url = configuredApiUrl.startsWith("http")
         ? configuredApiUrl
         : `https://${configuredApiUrl}`;
-      return url.includes(".onrender.com") ? url : `${url}.onrender.com`;
+      if (url.includes(".onrender.com") || url.includes("localhost")) {
+        return url;
+      }
+      return `${url}.onrender.com`;
     })()
   : "http://localhost:8080";
 

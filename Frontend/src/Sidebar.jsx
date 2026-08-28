@@ -19,11 +19,11 @@ function Sidebar() {
   } = useContext(MyContext);
 
   useEffect(() => {
-    refreshThreads().catch((err) => console.log(err));
+    refreshThreads().catch(() => undefined);
   }, [refreshThreads]);
 
   const createNewChat = () => {
-    refreshThreads().catch((err) => console.log(err));
+    refreshThreads().catch(() => undefined);
     setNewChat(true);
     setPrompt("");
     setReply(null);
@@ -65,7 +65,7 @@ function Sidebar() {
 
       //updated threads re-render
       setAllThreads((prev) =>
-        prev.filter((thread) => thread.threadId != threadId),
+        prev.filter((thread) => thread.threadId !== threadId),
       );
 
       if (threadId === currThreadId) {
@@ -96,7 +96,7 @@ function Sidebar() {
             <i
               className="fa-solid fa-trash"
               onClick={(e) => {
-                e.stopPropagation(); //stop event bubbling
+                e.stopPropagation();
                 deleteThread(thread.threadId);
               }}
             ></i>
@@ -109,13 +109,6 @@ function Sidebar() {
           By Himanshu <i className="fa-sharp fa-solid fa-heart" id="heart"></i>
         </p>
       </div>
-
-      {/* <div className="sign">
-
-        <p>
-          By Himanshu <i className="fa-sharp fa-solid fa-heart" id="heart"></i>
-        </p>
-      </div> */}
     </section>
   );
 }
