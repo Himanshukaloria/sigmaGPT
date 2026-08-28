@@ -16,15 +16,15 @@ services:
         value: production
       - key: FRONTEND_URL
         fromService:
-          type: static_site
+          type: web
           name: sigmagpt-web
           property: host
 
-  - type: static_site
+  - type: web
     name: sigmagpt-web
     rootDir: Frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    startCommand: npm start
     envVars:
       - key: VITE_API_URL
         fromService:
