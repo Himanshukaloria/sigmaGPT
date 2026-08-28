@@ -16,10 +16,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: FRONTEND_URL
-        fromService:
-          type: web
-          name: sigmagpt-web
-          property: host
+        value: https://sigmagpt-web-kfya.onrender.com
 
   - type: web
     name: sigmagpt-web
@@ -30,7 +27,4 @@ services:
     startCommand: npm start
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: sigmagpt-api
-          property: host
+        value: https://sigmagpt-api-sj06.onrender.com
