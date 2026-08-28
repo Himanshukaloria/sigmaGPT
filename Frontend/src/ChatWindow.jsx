@@ -16,7 +16,7 @@ function ChatWindow() {
     setNewChat,
     refreshThreads,
   } = useContext(MyContext);
-  const { logout } = useContext(AuthContext);
+  const { user, guest, logout } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -26,6 +26,7 @@ function ChatWindow() {
 
     setLoading(true);
     setError("");
+    setPrompt("");
     setNewChat(false);
     const options = {
       method: "POST",
@@ -39,7 +40,10 @@ function ChatWindow() {
       }),
     };
     try {
-      const response = await fetch(`${API_URL}/api/chat`, options);
+      const response = await fetch(
+        `${API_URL}/api${guest ? "/guest-chat" : "/chat"}`,
+        options,
+      );
       const res = await response.json();
       if (!response.ok) {
         throw new Error(res.error || "Unable to get a response");
@@ -50,7 +54,7 @@ function ChatWindow() {
         { role: "user", content: message },
         { role: "assistant", content: res.reply },
       ]);
-      await refreshThreads();
+      if (user) await refreshThreads();
     } catch (err) {
       setError(err.message);
     } finally {

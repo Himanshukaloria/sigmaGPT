@@ -35,7 +35,7 @@ function App() {
     );
   }, []);
 
-  const { user, loading } = useContext(AuthContext);
+  const { user, guest, loading, continueAsGuest } = useContext(AuthContext);
   const [showLogin, setShowLogin] = useState(true);
 
   const providerValues = {
@@ -58,9 +58,12 @@ function App() {
     return <div className="app-loading">Loading...</div>;
   }
 
-  if (!user) {
+  if (!user && !guest) {
     return showLogin ? (
-      <Login switchToSignup={() => setShowLogin(false)} />
+      <Login
+        switchToSignup={() => setShowLogin(false)}
+        continueAsGuest={continueAsGuest}
+      />
     ) : (
       <Signup switchToLogin={() => setShowLogin(true)} />
     );
@@ -69,7 +72,7 @@ function App() {
   return (
     <div className="app">
       <MyContext.Provider value={providerValues}>
-        <Sidebar></Sidebar>
+        {user && <Sidebar></Sidebar>}
         <ChatWindow></ChatWindow>
       </MyContext.Provider>
     </div>

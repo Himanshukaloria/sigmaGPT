@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
 import chatRoutes from "./routes/chat.js";
+import guestRoutes from "./routes/guest.js";
 import authRoutes from "./routes/auth.js";
 import protect from "./middleware/auth.js";
 
@@ -34,6 +35,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api", guestRoutes);
 app.use("/api", protect, chatRoutes);
 
 app.get("/", (req, res) => {

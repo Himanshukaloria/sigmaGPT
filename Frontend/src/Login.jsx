@@ -2,7 +2,7 @@ import "./Auth.css";
 import { useState, useContext } from "react";
 import { AuthContext } from "./auth-context.js";
 
-function Login({ switchToSignup }) {
+function Login({ switchToSignup, continueAsGuest }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -47,6 +47,13 @@ function Login({ switchToSignup }) {
             Signup
           </span>
         </p>
+        <button
+          className="guest-button"
+          type="button"
+          onClick={continueAsGuest}
+        >
+          Continue as Guest
+        </button>
       </form>
     </div>
   );

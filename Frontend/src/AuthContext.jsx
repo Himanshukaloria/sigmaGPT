@@ -4,6 +4,7 @@ import API_URL from "./api.js";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [guest, setGuest] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +20,11 @@ export const AuthProvider = ({ children }) => {
       } catch {
         if (!cancelled) setUser(null);
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setTimeout(() => {
+            if (!cancelled) setLoading(false);
+          }, 800);
+        }
       }
     };
 
@@ -39,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     setUser(data.user);
+    setGuest(false);
     return data.user;
   };
 
@@ -52,6 +58,7 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error);
     setUser(data.user);
+    setGuest(false);
     return data.user;
   };
 
@@ -61,10 +68,17 @@ export const AuthProvider = ({ children }) => {
       credentials: "include",
     });
     setUser(null);
+    setGuest(false);
+  };
+
+  const continueAsGuest = () => {
+    setGuest(true);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{ user, guest, loading, login, signup, logout, continueAsGuest }}
+    >
       {children}
     </AuthContext.Provider>
   );
