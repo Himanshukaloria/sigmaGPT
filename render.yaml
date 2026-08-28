@@ -16,11 +16,11 @@ services:
         value: production
       - key: FRONTEND_URL
         fromService:
-          type: static
+          type: static_site
           name: sigmagpt-web
           property: host
 
-  - type: static
+  - type: static_site
     name: sigmagpt-web
     rootDir: Frontend
     buildCommand: npm install && npm run build
