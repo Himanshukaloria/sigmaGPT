@@ -13,10 +13,14 @@ import protect from "./middleware/auth.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
-const frontendUrl = process.env.FRONTEND_URL
-  ? process.env.FRONTEND_URL.startsWith("http")
-    ? process.env.FRONTEND_URL
-    : `https://${process.env.FRONTEND_URL}`
+const configuredFrontendUrl = process.env.FRONTEND_URL;
+const frontendUrl = configuredFrontendUrl
+  ? (() => {
+      const url = configuredFrontendUrl.startsWith("http")
+        ? configuredFrontendUrl
+        : `https://${configuredFrontendUrl}`;
+      return url.includes(".onrender.com") ? url : `${url}.onrender.com`;
+    })()
   : "http://localhost:5173";
 
 // Middlewares
