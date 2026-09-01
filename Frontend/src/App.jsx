@@ -2,7 +2,7 @@ import "./App.css";
 import Sidebar from "./Sidebar.jsx";
 import ChatWindow from "./ChatWindow.jsx";
 import { MyContext } from "./MyContext.jsx";
-import { useState, useContext, useCallback } from "react";
+import { useState, useContext, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AuthContext } from "./auth-context.js";
 import API_URL from "./api.js";
@@ -37,6 +37,17 @@ function App() {
 
   const { user, guest, loading, continueAsGuest } = useContext(AuthContext);
   const [showLogin, setShowLogin] = useState(true);
+
+  useEffect(() => {
+    if (!user && !guest) return;
+
+    setPrompt("");
+    setReply(null);
+    setCurrThreadId(uuidv4());
+    setPrevChats([]);
+    setNewChat(true);
+    setAllThreads([]);
+  }, [user, guest]);
 
   const providerValues = {
     prompt,
